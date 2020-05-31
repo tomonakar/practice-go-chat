@@ -1,9 +1,11 @@
 package main
 
 import (
+	"chat/trace"
 	"flag"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"sync"
 	"text/template"
@@ -25,35 +27,22 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	var addr = flag.String("addr", ":8080", "アプリケーションのアドレス")
-	flag.Parse()
+	var addr = flag.String("addr", ":8080", "The addr of the application.")
+	flag.Parse() // parse the flags
+
 	r := newRoom()
+	r.tracer = trace.New(os.Stdout)
+
 	http.Handle("/", &templateHandler{filename: "chat.html"})
 	http.Handle("/room", r)
-	// チャットルームを開始します
+
+	// get the room going
 	go r.run()
-	// Webサーバーを起動します
-	log.Println("Webサーバを開始します。Port", *addr)
+
+	// start the web server
+	log.Println("Starting web server on", *addr)
 	if err := http.ListenAndServe(*addr, nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
-}
 
-// こんな書き方もできる
-// func main() {
-// 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
-// 		w.Write([]byte(`
-// 		<html>
-// 			<head>
-// 				<title>チャット</title>
-// 			</head>
-// 			<body>
-// 				チャットしましょう!
-// 			</body>
-// 		</html>
-// 		`))
-// 	})
-// 	if err := http.ListenAndServe(":8080", nil); err != nil {
-// 		log.Fatal("ListenAndServe:", err)
-// 	}
-// }
+}

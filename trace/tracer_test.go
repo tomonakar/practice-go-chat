@@ -6,16 +6,19 @@ import (
 )
 
 func TestNew(t *testing.T) {
-
 	var buf bytes.Buffer
 	tracer := New(&buf)
-
 	if tracer == nil {
-		t.Error("Return from New should not be nil")
+		t.Error("Newからの戻り値がnilです")
+	} else {
+		tracer.Trace("こんにちは, traceパッケージ")
+		if buf.String() != "こんにちは, traceパッケージ\n" {
+			t.Errorf("'%s'という誤まった文字列が出力されました", buf.String())
+		}
 	}
-	tracer.Trace("Hello trace package.")
-	if buf.String() != "Hello trace package.\n" {
-		t.Errorf("Trace should not write '%s'.", buf.String())
-	}
+}
 
+func TestOff(t *testing.T) {
+	var silentTraer Tracer = Off()
+	silentTraer.Trace("データ")
 }
