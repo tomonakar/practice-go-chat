@@ -10,6 +10,7 @@ import (
 type ConfigList struct {
 	GoogleClientSecret string
 	GoogleClientId     string
+	GoogleCallback     string
 	SecurityKey        string
 }
 
@@ -25,6 +26,7 @@ func init() {
 	Config = ConfigList{
 		GoogleClientSecret: cfg.Section("google").Key("client_secret").String(),
 		GoogleClientId:     cfg.Section("google").Key("client_id").String(),
+		GoogleCallback:     cfg.Section("google").Key("callback").String(),
 		SecurityKey:        cfg.Section("securityKey").Key("key").String(),
 	}
 }

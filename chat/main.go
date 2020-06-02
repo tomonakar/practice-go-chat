@@ -1,6 +1,7 @@
 package main
 
 import (
+	"chat/config"
 	"chat/trace"
 	"flag"
 	"log"
@@ -9,6 +10,9 @@ import (
 	"path/filepath"
 	"sync"
 	"text/template"
+
+	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/gomniauth/providers/google"
 )
 
 // templ represents a single template
@@ -29,6 +33,10 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	var addr = flag.String("addr", ":8080", "The addr of the application.")
 	flag.Parse() // parse the flags
+	gomniauth.SetSecurityKey(config.Config.SecurityKey)
+	gomniauth.WithProviders(
+		google.New(config.Config.GoogleClientId, config.Config.GoogleClientSecret, config.Config.GoogleCallback)
+	)
 
 	r := newRoom()
 	r.tracer = trace.New(os.Stdout)
