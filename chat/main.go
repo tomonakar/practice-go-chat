@@ -35,7 +35,7 @@ func main() {
 	flag.Parse() // parse the flags
 	gomniauth.SetSecurityKey(config.Config.SecurityKey)
 	gomniauth.WithProviders(
-		google.New(config.Config.GoogleClientId, config.Config.GoogleClientSecret, config.Config.GoogleCallback)
+		google.New(config.Config.GoogleClientId, config.Config.GoogleClientSecret, config.Config.GoogleCallback),
 	)
 
 	r := newRoom()
