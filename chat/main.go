@@ -52,6 +52,16 @@ func main() {
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/login", &templateHandler{filename: "login.html"})
 	http.HandleFunc("/auth/", loginHandler)
+	http.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
+		http.SetCookie(w, &http.Cookie{
+			Name:   "auth",
+			Value:  "", // クッキーを削除しないブラウザの対策で空文字で上書き
+			Path:   "/",
+			MaxAge: -1, // MaxAgeを-1にするとクッキーが削除される
+		})
+		w.Header()["Location"] = []string{"/chat"}
+		w.WriteHeader(http.StatusTemporaryRedirect)
+	})
 	http.Handle("/room", r)
 
 	// get the room going
