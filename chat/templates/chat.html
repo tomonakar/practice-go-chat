@@ -61,10 +61,15 @@
 
                     // メッセージ受信時の処理を実装
                     socket.onmessage = function(e) {
-                        var msg = eval("("+e.data+")");
+                        var msg = JSON.parse(e.data)
                         console.log({msg})
                         messages.append(
                             $("<li>").append(
+                                $("<img>").css({
+                                    width: 50,
+                                    verticalAlign: "middle",
+                                    borderRadius: "50%"
+                                }).attr("src", msg.AvatarURL),
                                 $("<strong>").text(`名前： ${msg.Name}`),
                                 $("<p>").text("---->   " + msg.Message).append(
                                         "      " + "<time>(" + msg.Time + ")</time>"
