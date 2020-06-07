@@ -26,16 +26,11 @@
         <!-- 入力スペース -->
         <div>
             <form id="chatbox">
+            {{.UserData.name}}:<be/>
                 <div>
                     <div>
                         <div>
-                            <text>Name</text>
-                        </div>
-                        <input type="text" name="name" size="20" id="name" class="text">
-                    </div>
-                    <div>
-                        <div>
-                            <text>Input Message</text>
+                            <text>チャットメッセージ</text>
                         </div>
                         <textarea class="text"></textarea>
                     </div>
@@ -70,7 +65,7 @@
                         console.log({msg})
                         messages.append(
                             $("<li>").append(
-                                $("<strong>").text(msg.Name + " :"),
+                                $("<strong>").text(`名前： ${msg.Name}`),
                                 $("<p>").text("---->   " + msg.Message).append(
                                         "      " + "<time>(" + msg.Time + ")</time>"
                                 )
