@@ -17,10 +17,11 @@ type room struct {
 	leave   chan *client     // leave is a channel for clients wishing to leave the room.
 	clients map[*client]bool // clients holds all current clients in this room.
 	tracer  trace.Tracer     // tracer will receive trace information of activity in the room.
+	avatar  Avatar
 }
 
 // newRoom makes a new room that is ready to go.
-func newRoom() *room {
+func newRoom(avatar Avatar) *room {
 	t := time.Now()
 	layout := "2006-01-02 15:04:05"
 	fmt.Println("Created chat room: ", t.Format(layout))
@@ -31,6 +32,7 @@ func newRoom() *room {
 		leave:   make(chan *client),
 		clients: make(map[*client]bool),
 		tracer:  trace.Off(),
+		avatar:  avatar,
 	}
 }
 

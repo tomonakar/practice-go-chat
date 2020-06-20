@@ -46,7 +46,7 @@ func main() {
 		google.New(config.Config.GoogleClientId, config.Config.GoogleClientSecret, config.Config.GoogleCallback),
 	)
 
-	r := newRoom()
+	r := newRoom(UseAuthAvatar)
 	r.tracer = trace.New(os.Stdout)
 
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
