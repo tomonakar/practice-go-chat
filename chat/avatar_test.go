@@ -59,6 +59,6 @@ func TestFileSystemAvatar(t *testing.T) {
 		t.Error("FileSystemAvatar.GetAvatarURLはエラーを返すべきではない")
 	}
 	if url != "/avatars/abc.jpg" {
-		t.Error("FyleSystemAvatar.GetAvatarURLが%sという誤った値を返しました", url)
+		t.Errorf("FyleSystemAvatar.GetAvatarURLが%sという誤った値を返しました", url)
 	}
 }
