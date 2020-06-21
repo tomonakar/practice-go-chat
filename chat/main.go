@@ -16,6 +16,13 @@ import (
 	"github.com/stretchr/objx"
 )
 
+// 現在アクティブなAvatarの実装
+var avatars Avatar = TryAvatars{
+	UseFileSystemAvatar,
+	UseAuthAvatar,
+	UseGravatar,
+}
+
 // templ represents a single template
 type templateHandler struct {
 	once     sync.Once
@@ -46,9 +53,7 @@ func main() {
 		google.New(config.Config.GoogleClientId, config.Config.GoogleClientSecret, config.Config.GoogleCallback),
 	)
 
-	// r := newRoom(UseAuthAvatar)
-	// r := newRoom(UseGravatar)
-	r := newRoom(UseFileSystemAvatar)
+	r := newRoom()
 	r.tracer = trace.New(os.Stdout)
 
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
