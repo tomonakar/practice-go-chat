@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"math/rand"
 	"os"
@@ -10,11 +11,14 @@ import (
 	"unicode"
 )
 
-var tlds = []string{"com", "net"}
+// var tlds = []string{"com", "net"}
 
 const allowedChars = "abcdefghijklmnopqrstuvwxyz0123456789_-"
 
 func main() {
+	flag.Parse()
+	tlds := flag.Args()
+
 	rand.Seed(time.Now().UnixNano())
 	s := bufio.NewScanner(os.Stdin)
 	for s.Scan() {
@@ -29,6 +33,7 @@ func main() {
 			}
 			newText = append(newText, r)
 		}
+		// fmt.Println(string(newText) + "." + tlds[rand.Intn(len(tlds))])
 		fmt.Println(string(newText) + "." + tlds[rand.Intn(len(tlds))])
 	}
 }
