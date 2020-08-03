@@ -11,7 +11,7 @@ import (
 	"unicode"
 )
 
-// var tlds = []string{"com", "net"}
+var domain = []string{"com", "net"}
 
 const allowedChars = "abcdefghijklmnopqrstuvwxyz0123456789_-"
 
@@ -34,7 +34,11 @@ func main() {
 			newText = append(newText, r)
 		}
 		// fmt.Println(string(newText) + "." + tlds[rand.Intn(len(tlds))])
-		fmt.Println(string(newText) + "." + tlds[rand.Intn(len(tlds))])
+		if len(tlds) > 0 {
+			fmt.Println(string(newText) + "." + tlds[rand.Intn(len(tlds))])
+		} else {
+			fmt.Println(string(newText) + "." + domain[rand.Intn(len(domain))])
+		}
 	}
 }
 
