@@ -16,7 +16,6 @@ func main() {
 		word := s.Text()
 		syns, err := thesaurus.Synonyms(word)
 		if err != nil {
-			fmt.Println(syns)
 			log.Fatalf("%qの類語検索に失敗しました: %v\n", word, err)
 		}
 		if len(syns) == 0 {
